@@ -57,16 +57,36 @@
         <!-- <p><a href="https://github.com/yourusername" style="color: #00ff41;">GitHub</a> | <a href="https://linkedin.com/in/yourprofile" style="color: #00ff41;">LinkedIn</a></p> -->
     </section>
 
-    <section>
-        <h2>Contact</h2>
-        <form action="https://formspree.io/f/mlgpjndk" method="post">
-            <label>Name:<br><input type="text" name="name" required></label><br>
-            <label>Email:<br><input type="email" name="email" required></label><br>
-            <label>Message:<br><textarea name="message" rows="5" required></textarea></label><br>
-            <input type="hidden" name="_next" value="https://latent-data.net/thanks.html" />
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+<section>
+    <h2>Contact</h2>
+    <form id="contact-form">
+        <label>Name:<br><input type="text" name="name" required></label><br>
+        <label>Email:<br><input type="email" name="email" required></label><br>
+        <label>Message:<br><textarea name="message" rows="5" required></textarea></label><br>
+        <button type="submit" id="submit-btn">Send Message</button>
+    </form>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            const formData = new FormData(this);
+            const response = await fetch('https://formspree.io/f/mlgpjndk', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            if (response.ok) {
+                window.location.href = 'https://latent-data.net/thanks.html';
+            } else {
+                btn.textContent = 'Send Message';
+                btn.disabled = false;
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    </script>
+</section>
 
     <footer>
         &copy; 2026 Latent Data Networks. West Sussex, England. <span style="opacity: 0.6;">Scanning...</span>
